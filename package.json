@@ -1,0 +1,35 @@
+{
+  "name": "adventure",
+  "version": "1.0.0",
+  "description": "create and discover latest events, business  marketing, inspirational life  quotes  and more",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "dev": "nodemon app/system/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EphraimBsB/Adventure.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EphraimBsB/Adventure/issues"
+  },
+  "homepage": "https://github.com/EphraimBsB/Adventure#readme",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "express": "^4.17.1",
+    "jest": "^26.6.3",
+    "joi": "^17.4.0",
+    "mysql2": "^2.2.5",
+    "prettier": "^2.2.1",
+    "sequelize": "^6.6.2",
+    "sequelize-cli": "^6.2.0"
+  }
+}
