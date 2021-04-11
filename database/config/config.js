@@ -5,7 +5,7 @@ const config = {
     username: "root",
     password: null,
     database: keys.DB_NAME,
-    host: "127.0.0.1",
+    host: keys.DB_HOST,
     port: keys.DB_PORT,
     dialect: "mysql",
   },
