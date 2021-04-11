@@ -1,45 +1,44 @@
-const model = require("../../database/models");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const validation = require("../middlewares/user.credentials.validation");
-//Signup Function
+const { async } = require("regenerator-runtime/runtime");
 
-const signup = (req, res) => {
+require("regenerator-runtime/runtime");
+//User Authentification Class
+class User{
+  constructor(model,hashPassword,comparePassword){
+    this.model = model,
+    this.hashPassword = hashPassword,
+    this.comparePassword = comparePassword
+  }
+  //Signup Methode
+signup = async(req, res) => {
   const { user } = req;
+  const { email } = user;
 
-  model.User.findOne({ where: { email: user.email } })
-    .then((result) => {
-      if (result) {
-        res.status(409).json({
+  const userFind = await this.model.User.findOne({ where: { email } });
+      if (userFind) {
+       return res.status(409).json({
           message: "Email already exist",
         });
-      } else {
-        bcrypt.genSalt(10, (error, salt) => {
-          bcrypt.hash(user.password, salt, (error, hash) => {
-            user["password"] = hash;
-
-            model.User.create(user)
-              .then((result) => {
-                res.status(201).json({
-                  message: "User created succefully",
-                });
-              })
-              .catch((error) => {
-                res.status(500).json({
-                  message: "Something went wrong",
-                });
-              });
-          });
-        });
       }
-    })
-    .catch((error) => {
-      res.status(500).json({
-        message: "Something went wrong",
-      });
-    });
+       return this.hashPassword(req, res);
+
 };
 
-module.exports = {
-  signup: signup,
+//Login Function
+
+login = async (req,res) => {
+  const { user } = req;
+  const { email, password } = user;
+
+  const data = await this.model.User.findOne({where:{email}});
+  if(!data){
+    return res.status(401).json({
+        message: "Invalid credentials"
+    })  
+  }  
+  
+ return this.comparePassword(req,res,data);
+
+}
 };
+
+module.exports = User;
