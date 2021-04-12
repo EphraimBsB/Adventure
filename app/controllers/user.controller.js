@@ -1,10 +1,10 @@
-const { async } = require("regenerator-runtime/runtime");
+// const { async } = require("regenerator-runtime/runtime");
 
-require("regenerator-runtime/runtime");
+// require("regenerator-runtime/runtime");
 //User Authentification Class
 class User{
-  constructor(model,hashPassword,comparePassword){
-    this.model = model,
+  constructor(service,hashPassword,comparePassword){
+    this.service = service,
     this.hashPassword = hashPassword,
     this.comparePassword = comparePassword
   }
@@ -13,7 +13,7 @@ signup = async(req, res) => {
   const { user } = req;
   const { email } = user;
 
-  const userFind = await this.model.User.findOne({ where: { email } });
+  const userFind = await this.service.findUser(email);
       if (userFind) {
        return res.status(409).json({
           message: "Email already exist",
@@ -29,7 +29,7 @@ login = async (req,res) => {
   const { user } = req;
   const { email, password } = user;
 
-  const data = await this.model.User.findOne({where:{email}});
+  const data = await this.service.findUser(email);
   if(!data){
     return res.status(401).json({
         message: "Invalid credentials"
