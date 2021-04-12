@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const model = require("../../database/models");
 const jwt = require("jsonwebtoken");
 const keys = require("../../utils/keys");
-
+const service = require("../../database/acid/services");
 
 const hashPass = (req, res) => {
     const { body: user } = req;
@@ -10,7 +10,7 @@ const hashPass = (req, res) => {
     bcrypt.genSalt(10, (_, salt) => {
         bcrypt.hash(password, salt, (_, hash) => {
          user["password"] = hash;
-         model.User.create(user)
+         service.createUser(user)
          .then(() => {
              res.status(201).json({
                message: "User created succefully",
