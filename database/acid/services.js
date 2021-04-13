@@ -11,13 +11,7 @@ const findUser = async(email) => {
     return userFind;
 }
 
-//Blog CRUD
-const createPost = async(post) => {
-    const create = await model.Post.create(post);
-    return create;
-}
 module.exports = {
     createUser,
     findUser,
-    createPost
 }
