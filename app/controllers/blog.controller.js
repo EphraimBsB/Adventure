@@ -48,6 +48,28 @@ class Blog {
             })
         })
     }
+
+//FUNCTION TO UPDATE A POST
+update = (req,res) => {
+    const id = req.params.id;
+    const updatedPost = {
+        title: req.body.title,
+        description:req.body.description
+    }
+    const userId = 1;
+    const obj = {where:{id:id, userId:userId}};
+    const upDate = this.blogService.updatePost(updatedPost,obj).then(result=>{
+        res.status(200).json({
+            message: "Post updated succefully",
+            post:updatedPost
+        })
+    }).catch(err=>{
+        res.status(500).json({
+            message: "Something went wrong",
+            err:err
+        })
+    })
+}
 };
 
 module.exports = Blog;

@@ -6,5 +6,6 @@ const route = express.Router();
 route.post('/post',postValidation ,blogController.save);
 route.get('/viewAll',blogController.viewAll);
 route.get('/view/:id',blogController.view);
+route.patch('/update/:id',postValidation,blogController.update);
 
 module.exports = route;

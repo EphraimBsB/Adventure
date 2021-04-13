@@ -15,8 +15,14 @@ const findPost = async(id) => {
     return findOne;
 }
 
+const updatePost = async(updatedPost,obj) => {
+    const upDate = await model.Post.update(updatedPost,obj)
+    return upDate;
+}
+
 module.exports = {
     createPost,
     findAllPost,
-    findPost
+    findPost,
+    updatePost
 }
