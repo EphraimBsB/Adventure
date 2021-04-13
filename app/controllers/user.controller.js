@@ -1,7 +1,4 @@
-// const { async } = require("regenerator-runtime/runtime");
 
-// require("regenerator-runtime/runtime");
-//User Authentification Class
 class User{
   constructor(service,hashPassword,comparePassword){
     this.service = service,
@@ -19,7 +16,21 @@ signup = async(req, res) => {
           message: "Email already exist",
         });
       }
-       return this.hashPassword(req, res);
+      const hashuser = await this.hashPassword(user);
+      console.log(hashuser);
+      this.service.createUser(hashuser)
+         .then(() => {
+             res.status(201).json({
+               message: "User created succefully",
+             });
+           })
+           .catch((error) => {
+             res.status(500).json({
+               message: "Something went wrong",
+               error
+             });
+           });
+
 
 };
 

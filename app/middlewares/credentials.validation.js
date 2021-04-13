@@ -1,5 +1,6 @@
 const Joi = require("joi");
 
+//registration validation
 const registerValidation = (req, res, next) => {
   const user = {
     username: req.body.username,
@@ -24,6 +25,7 @@ const registerValidation = (req, res, next) => {
   return next();
 }
 
+// login validation
 const loginValidation = (req, res, next) => {
   const user = {
     username: req.body.username,
@@ -47,8 +49,6 @@ const loginValidation = (req, res, next) => {
   req["user"] = user;
   return next();
 };
-
-
 module.exports = {
   registerValidation,
   loginValidation,

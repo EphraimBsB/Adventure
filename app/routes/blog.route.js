@@ -1,7 +1,9 @@
 const express = require('express');
-const controller = require('../controllers/blog.controller');
+const { blogController } = require('../controllers');
+const { postValidation } = require('../middlewares/post.validation');
+
 const route = express.Router();
-route.get('/post',controller.firstRoute);
-route.get('/blog',controller.secondRoute);
+route.post('/post',postValidation ,blogController.save);
+//route.get('/blog',controller.secondRoute);
 
 module.exports = route;
