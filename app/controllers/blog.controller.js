@@ -70,6 +70,29 @@ update = (req,res) => {
         })
     })
 }
+
+//FUNCTION TO DELETE A POST
+destroy = (req,res) => {
+    const id = req.params.id;
+    const userId = 1;
+    const obj = {where:{id:id, userId:userId}};
+    const dest = this.blogService.deletePost(obj).then(result=>{
+        if(result){
+            res.status(200).json({
+                message: "Post Deleted succefully"
+            })
+        }else{
+            res.status(404).json({
+                message: '404 Post Not Found',
+            }) 
+        }
+    }).catch(err=>{
+        res.status(500).json({
+            message: "Something went wrong",
+            err:err})})
+}
+
 };
+
 
 module.exports = Blog;

@@ -20,9 +20,15 @@ const updatePost = async(updatedPost,obj) => {
     return upDate;
 }
 
+const deletePost = async(obj) => {
+    const destroy = await model.Post.destroy(obj);
+    return destroy;
+}
+
 module.exports = {
     createPost,
     findAllPost,
     findPost,
-    updatePost
+    updatePost,
+    deletePost
 }
