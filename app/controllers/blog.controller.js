@@ -1,14 +1,12 @@
 
 class Blog {
-    constructor (service) {
-        this.service = service;
+    constructor (blogService) {
+        this.blogService = blogService;
     }
-//fUNCTION TO CREATE AND SAVE A POST
+
 save = (req,res)=>{
     const {post} = req;
-    console.log(post);
-//    const {title,userId,description} = post;
-    const createPost = this.service.createPost(post);
+    const createPost = this.blogService.createPost(post);
     if(createPost){
         res.status(201).json({
             message: "Post has been created succcefuly",
