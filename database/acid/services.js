@@ -1,6 +1,5 @@
 const model = require("../models");
 
-// User authentication CRUD
 const createUser = async(user) => {
     const create = await model.User.create(user);
     return create;
