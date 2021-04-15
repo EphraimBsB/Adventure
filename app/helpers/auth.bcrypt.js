@@ -2,29 +2,21 @@ const bcrypt = require("bcrypt");
 const model = require("../../database/models");
 const jwt = require("jsonwebtoken");
 const keys = require("../../utils/keys");
-
-
-const hashPass = (req, res) => {
-    const { body: user } = req;
-    const { password } = user;
-    bcrypt.genSalt(10, (_, salt) => {
-        bcrypt.hash(password, salt, (_, hash) => {
-         user["password"] = hash;
-         model.User.create(user)
-         .then(() => {
-             res.status(201).json({
-               message: "User created succefully",
-             });
-           })
-           .catch((error) => {
-             res.status(500).json({
-               message: "Something went wrong",
-               error
-             });
-           });
-       });
-     });
+const resolveHashPass = (hash,user) => {
+user["password"] = hash;
+return user;
 }
+
+const hashPass = (user) => {
+    const { password } = user;
+    return new Promise((resolve, reject) => {
+      bcrypt.genSalt(10, (error, salt) => {
+        if (error) return reject(error);
+        bcrypt.hash(password, salt, (error, hash) => error ? reject(error) : resolve(resolveHashPass(hash,user))
+        );
+      }); 
+    });
+  }
 
 const comparePass = (req, res, data) => {
     const { body: user } = req;

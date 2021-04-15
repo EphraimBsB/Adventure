@@ -1,7 +1,11 @@
 const express = require('express');
-const controller = require('../controllers/blog.controller');
+const { blogController } = require('../controllers');
+const { postValidation } = require('../middlewares/post.validation');
+
 const route = express.Router();
-route.get('/post',controller.firstRoute);
-route.get('/blog',controller.secondRoute);
+route.post('/blog',postValidation ,blogController.save);
+route.get('/blogs',blogController.viewAll);
+route.get('/blog/:id',blogController.view);
+route.patch('/blog/:id',postValidation,blogController.update);
 
 module.exports = route;
