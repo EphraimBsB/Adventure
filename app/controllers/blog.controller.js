@@ -3,23 +3,21 @@ class Blog {
     constructor (blogService) {
         this.blogService = blogService;
     }
-//fUNCTION TO CREATE AND SAVE A POST
+
     save = (req,res)=>{
         const {post} = req;
-        const createPost = this.blogService.createPost(post);
-        if(createPost){
+        const createPost = this.blogService.createPost(post).then(result=>{
             res.status(201).json({
                 message: "Post has been created succcefuly",
                 post: post
             })
-        } (error=>{
+        }).catch(error=>{
             res.status(500).json({
                 message: "Something went wrong",
-                error: error})
+                error: error});
             });
     }
 
-// FUNCTION TO VIEW ALL BLOGS
     viewAll = (_,res) => {
         const findAll = this.blogService.findAllPost().then(result=>{
             res.status(200).json(result);
@@ -30,10 +28,8 @@ class Blog {
         })
     }
 
-// FUNCTION TO VIEW ONE BLOG
     view = (req,res) => {
         const id = req.params.id;
-        console.log(id);
         const findOne = this.blogService.findPost(id).then(result=>{
             if(result){
                 res.status(200).json(result);
@@ -49,7 +45,6 @@ class Blog {
         })
     }
 
-//FUNCTION TO UPDATE A POST
 update = (req,res) => {
     const id = req.params.id;
     const updatedPost = {
@@ -71,7 +66,6 @@ update = (req,res) => {
     })
 }
 
-//FUNCTION TO DELETE A POST
 destroy = (req,res) => {
     const id = req.params.id;
     const userId = 1;

@@ -4,10 +4,10 @@ const checkAuth = require('../middlewares/check.auth');
 const { postValidation } = require('../middlewares/post.validation');
 
 const route = express.Router();
-route.post('/post',postValidation, checkAuth, blogController.save);
-route.get('/viewAll',blogController.viewAll);
-route.get('/view/:id',blogController.view);
-route.patch('/update/:id',postValidation, checkAuth, blogController.update);
-route.delete('/delete/:id',checkAuth,blogController.destroy);
+route.post('/blog',postValidation, checkAuth, blogController.save);
+route.get('/blogs',blogController.viewAll);
+route.get('/blog/:id',blogController.view);
+route.patch('/blog/:id',postValidation, checkAuth, blogController.update);
+route.delete('/blog/:id',checkAuth,blogController.destroy);
 
 module.exports = route;

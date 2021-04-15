@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-//Blog validation
+
 const postValidation = (req, res, next) => {
  const post={
         title: req.body.title,
