@@ -5,7 +5,6 @@ class User{
     this.hashPassword = hashPassword,
     this.comparePassword = comparePassword
   }
-  //Signup Methode
 signup = async(req, res) => {
   const { user } = req;
   const { email } = user;
@@ -17,7 +16,7 @@ signup = async(req, res) => {
         });
       }
       const hashuser = await this.hashPassword(user);
-      console.log(hashuser);
+  
       this.service.createUser(hashuser)
          .then(() => {
              res.status(201).json({
@@ -33,8 +32,6 @@ signup = async(req, res) => {
 
 
 };
-
-//Login Function
 
 login = async (req,res) => {
   const { user } = req;

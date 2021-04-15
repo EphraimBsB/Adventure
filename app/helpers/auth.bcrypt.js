@@ -17,7 +17,6 @@ const hashPass = (user) => {
       }); 
     });
   }
-//   let hashed = await hashPassword(password);
 
 const comparePass = (req, res, data) => {
     const { body: user } = req;
