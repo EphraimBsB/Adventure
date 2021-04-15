@@ -6,16 +6,16 @@ class Blog {
 
 save = (req,res)=>{
     const {post} = req;
-    const createPost = this.blogService.createPost(post);
-    if(createPost){
+    this.blogService.createPost(post).then(result=>{
         res.status(201).json({
             message: "Post has been created succcefuly",
             post: post
         })
-    } (error=>{
+    }).catch(error=>{
         res.status(500).json({
             message: "Something went wrong",
             error: error})
+            console.log(error);
         });
 }
 };
