@@ -1,11 +1,10 @@
-const User = require("./user.controller");
-const service = require("../../database/acid/services");
-const {hashPass, comparePass} = require("../helpers/auth.bcrypt");
-const Blog = require("./blog.controller");
-const blogService = require("../../database/acid/blog.services");
-const userController = new User(service,hashPass,comparePass);
-const blogController = new Blog(blogService); 
-module.exports = {
-    userController:userController,
-    blogController: blogController,
-};
+import User from './user.controller';
+import Service from '../../database/acid/user.services';
+import { hashPass, comparePass, userToken } from '../helpers/auth.bcrypt';
+import Blog from './blog.controller';
+import BlogServer from '../../database/acid/blog.services';
+
+const blogService = new BlogServer();
+const service = new Service();
+export const userController = new User(service, hashPass, comparePass, userToken);
+export const blogController = new Blog(blogService);

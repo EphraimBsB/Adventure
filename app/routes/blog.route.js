@@ -1,13 +1,13 @@
-const express = require('express');
-const { blogController } = require('../controllers');
-const checkAuth = require('../middlewares/check.auth');
-const { postValidation } = require('../middlewares/post.validation');
+import express from 'express';
+import { blogController } from '../controllers/index';
+import checkAuth from '../middlewares/check.auth';
+import postValidation from '../middlewares/post.validation';
 
 const route = express.Router();
-route.post('/blog',postValidation, checkAuth, blogController.save);
-route.get('/blogs',blogController.viewAll);
-route.get('/blog/:id',blogController.view);
-route.patch('/blog/:id',postValidation, checkAuth, blogController.update);
-route.delete('/blog/:id',checkAuth,blogController.destroy);
+route.post('/', postValidation, checkAuth, blogController.save);
+route.get('/', blogController.viewAll);
+route.get('/:id', blogController.view);
+route.patch('/:id', postValidation, checkAuth, blogController.update);
+route.delete('/:id', checkAuth, blogController.destroy);
 
-module.exports = route;
+export default route;

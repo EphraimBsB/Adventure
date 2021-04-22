@@ -1,8 +1,10 @@
-const http = require('http');
-const app = require("./app");
+/* eslint-disable no-console */
+import http from 'http';
+import app from './app';
+
 const server = http.createServer(app);
 const port = process.env.PORT || 5000;
 
-server.listen(port,()=>{
-    console.log("Server is runing on port 5000");
+server.listen(port, () => {
+  console.log('Server is runing on port 5000');
 });

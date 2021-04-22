@@ -1,55 +1,66 @@
-
-class User{
-  constructor(service,hashPassword,comparePassword){
+/* eslint-disable consistent-return */
+/* eslint-disable no-sequences */
+/* eslint-disable no-unused-expressions */
+class User {
+  constructor(service, hashPassword, comparePassword, token) {
     this.service = service,
     this.hashPassword = hashPassword,
-    this.comparePassword = comparePassword
+    this.comparePassword = comparePassword,
+    this.token = token;
   }
 
-signup = async(req, res) => {
-  const { user } = req;
-  const { email } = user;
+  // eslint-disable-next-line consistent-return
+  signup = async (req, res) => {
+    const { user } = req;
+    const { email } = user;
 
-  const userFind = await this.service.findUser(email);
+    await this.service.findUser(email).then((userFind) => {
       if (userFind) {
-       return res.status(409).json({
-          message: "Email already exist",
+        return res.status(409).json({
+          message: 'Email already exist',
         });
       }
-      const hashuser = await this.hashPassword(user);
-  
-      this.service.createUser(hashuser)
-         .then(() => {
-             res.status(201).json({
-               message: "User created succefully",
-             });
-           })
-           .catch((error) => {
-             res.status(500).json({
-               message: "Something went wrong",
-               error
-             });
-           });
+      this.hashPassword(user).then((hashuser) => {
+        this.service.createUser(hashuser).then((data) => {
+          this.token(res, data);
+        }).catch((err) => {
+          res.status(500).json({
+            message: 'Vaild to create User',
+            err,
+          });
+        });
+      }).catch((err) => {
+        res.status(500).json({
+          message: 'Vaild to Hash Password',
+          err,
+        });
+      });
+    }).catch((error) => {
+      res.status(500).json({
+        message: 'Something went wrong',
+        error: error.name,
+      });
+    });
+  };
 
-
-};
-
-
-
-login = async (req,res) => {
+login = async (req, res) => {
   const { user } = req;
-  const { email, password } = user;
+  const { username } = user;
 
-  const data = await this.service.findUser(email);
-  if(!data){
-    return res.status(401).json({
-        message: "Invalid credentials"
-    })  
-  }  
-  
- return this.comparePassword(req,res,data);
-
+  await this.service.findUser(username).then((data) => {
+    if (!data) {
+      return res.status(401).json({
+        message: 'Invalid credentials',
+      });
+    }
+    return this.comparePassword(req, res, data);
+  }).catch((err) => {
+    res.status(500).json({
+      message: 'Something went',
+      error: err.name,
+    });
+  });
 }
-};
+}
 
-module.exports = User;
+export default User;
