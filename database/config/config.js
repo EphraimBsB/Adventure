@@ -1,26 +1,34 @@
-const keys = require('../../utils/keys');
+require('dotenv').config();
+
+const {
+  DB_NAME,
+  DB_PORT,
+  DB_HOST,
+  DB_USER,
+  DB_PASS,
+} = process.env;
 
 const config = {
   development: {
-    username: 'root',
-    password: null,
-    database: keys.DB_NAME,
-    host: keys.DB_HOST,
-    port: keys.DB_PORT,
+    username: DB_USER,
+    password: DB_PASS,
+    database: DB_NAME,
+    host: DB_HOST,
+    port: DB_PORT,
     dialect: 'mysql',
   },
   test: {
-    username: 'root',
-    password: null,
-    database: 'database_test',
-    host: '127.0.0.1',
+    username: DB_USER,
+    password: DB_PASS,
+    database: DB_NAME,
+    host: DB_HOST,
     dialect: 'mysql',
   },
   production: {
-    username: 'root',
-    password: null,
-    database: 'database_production',
-    host: '127.0.0.1',
+    username: DB_USER,
+    password: DB_PASS,
+    database: DB_NAME,
+    host: DB_HOST,
     dialect: 'mysql',
   },
 };

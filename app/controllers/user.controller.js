@@ -1,6 +1,8 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-sequences */
 /* eslint-disable no-unused-expressions */
+
+// User Authentification Class
 class User {
   constructor(service, hashPassword, comparePassword, token) {
     this.service = service,
